@@ -8,3 +8,10 @@ resource "aws_route_table" "public" {
 
   tags = merge(var.tags, { Name = var.vpc.public_route_table_name })
 }
+
+resource "aws_route_table_association" "publics" {
+  count = length(var.vpc.public_subnets)
+
+  subnet_id      = aws_subnet.publics[count.index].id
+  route_table_id = aws_route_table.public.id
+}
