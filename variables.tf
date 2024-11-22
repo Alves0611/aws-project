@@ -24,6 +24,13 @@ variable "vpc" {
       availability_zone       = string
       cidr_block              = string
     }))
+
+    private_subnets = list(object({
+      name                    = string
+      map_public_ip_on_launch = bool
+      availability_zone       = string
+      cidr_block              = string
+    }))
   })
 
   default = {
@@ -50,11 +57,13 @@ variable "vpc" {
         cidr_block              = "10.0.0.64/26"
       }
     ]
-    private_subnets = [{
-      name                    = "private-us-east-1a"
-      map_public_ip_on_launch = false
-      availability_zone       = "us-east-1a"
-      cidr_block              = "10.0.0.128/26"
+
+    private_subnets = [
+      {
+        name                    = "private-us-east-1a"
+        map_public_ip_on_launch = false
+        availability_zone       = "us-east-1a"
+        cidr_block              = "10.0.0.128/26"
       },
       {
         name                    = "private-us-east-1b"
@@ -65,6 +74,7 @@ variable "vpc" {
     ]
   }
 }
+
 
 variable "eks_cluster" {
   type = object({
@@ -79,11 +89,12 @@ variable "eks_cluster" {
       scaling_config_max_size     = number
       scaling_config_min_size     = number
       scaling_config_desired_size = number
+      capacity_type               = string
     })
   })
 
   default = {
-    name     = "studying-eks-cluster"
+    name      = "studying-eks-cluster"
     role_name = "StudyingEKSClusterRole"
     enabled_cluster_log_types = [
       "api",
@@ -92,7 +103,7 @@ variable "eks_cluster" {
       "controllerManager",
       "scheduler"
     ]
-    acces_config_authentication_mode = "API_AND_CONFIG_MAP"
+    access_config_authentication_mode = "API_AND_CONFIG_MAP" # Corrigido aqui
     node_group = {
       name                        = "studying-eks-cluster-node-group"
       role_name                   = "StudyingEKSClusterNodeGroup"
@@ -100,7 +111,7 @@ variable "eks_cluster" {
       scaling_config_max_size     = 2
       scaling_config_min_size     = 2
       scaling_config_desired_size = 2
-
+      capacity_type               = "ON_DEMAND"
     }
   }
 }
