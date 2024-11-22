@@ -1,4 +1,4 @@
-resource "aws_subnet" "public" {
+resource "aws_subnet" "publics" {
   count                   = length(var.vpc.public_subnets)
   vpc_id                  = aws_vpc.this.id
   cidr_block              = var.vpc.public.subnets[count.index].cidr_block
