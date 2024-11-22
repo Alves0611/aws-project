@@ -5,5 +5,5 @@ resource "aws_subnet" "public" {
   availability_zone       = var.vpc.public.subnets[count.index].availability_zone
   map_public_ip_on_launch = var.vpc.public.subnets[count.index].map_public_ip_on_launch
 
-  tags = var.tags
+  tags = merge(var.tags, { Name = var.vpc.public_subnets[count.index].name })
 }
