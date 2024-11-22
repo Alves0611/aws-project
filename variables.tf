@@ -84,7 +84,7 @@ variable "eks_cluster" {
 
   default = {
     name     = "studying-eks-cluster"
-    role_arn = "StudyingEKSClusterRole"
+    role_name = "StudyingEKSClusterRole"
     enabled_cluster_log_types = [
       "api",
       "audit",
