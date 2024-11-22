@@ -6,6 +6,7 @@ variable "tags" {
   }
 }
 
+
 variable "vpc" {
   type = object({
     name       = string
@@ -71,5 +72,44 @@ variable "vpc" {
         cidr_block              = "10.0.0.192/26"
       }
     ]
+  }
+}
+
+
+variable "eks_cluster" {
+  type = object({
+    name                              = string
+    role_name                         = string
+    enabled_cluster_log_types         = list(string)
+    access_config_authentication_mode = string
+    node_group = object({
+      name                        = string
+      role_name                   = string
+      instance_types              = list(string)
+      scaling_config_max_size     = number
+      scaling_config_min_size     = number
+      scaling_config_desired_size = number
+    })
+  })
+
+  default = {
+    name      = "studying-eks-cluster"
+    role_name = "StudyingEKSClusterRole"
+    enabled_cluster_log_types = [
+      "api",
+      "audit",
+      "authenticator",
+      "controllerManager",
+      "scheduler"
+    ]
+    access_config_authentication_mode = "API_AND_CONFIG_MAP" # Corrigido aqui
+    node_group = {
+      name                        = "studying-eks-cluster-node-group"
+      role_name                   = "StudyingEKSClusterNodeGroup"
+      instance_types              = ["t3.medium"]
+      scaling_config_max_size     = 2
+      scaling_config_min_size     = 2
+      scaling_config_desired_size = 2
+    }
   }
 }
