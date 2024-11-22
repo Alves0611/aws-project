@@ -12,9 +12,10 @@ variable "vpc" {
     name       = string
     cidr_block = string
 
-    internet_gateway_name   = string
-    nat_gateway_name        = string
-    public_route_table_name = string
+    internet_gateway_name    = string
+    nat_gateway_name         = string
+    public_route_table_name  = string
+    private_route_table_name = string
 
     public_subnets = list(object({
       name                    = string
@@ -28,9 +29,10 @@ variable "vpc" {
     name       = "studying-vpc"
     cidr_block = "10.0.0.0/24"
 
-    internet_gateway_name   = "studying-igw"
-    nat_gateway_name        = "studying-nat"
-    public_route_table_name = "studying-public-route-table"
+    internet_gateway_name    = "studying-igw"
+    nat_gateway_name         = "studying-nat"
+    public_route_table_name  = "studying-public-route-table"
+    private_route_table_name = "studying-private-route-table"
 
     public_subnets = [
       {
