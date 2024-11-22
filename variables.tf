@@ -89,6 +89,7 @@ variable "eks_cluster" {
       scaling_config_max_size     = number
       scaling_config_min_size     = number
       scaling_config_desired_size = number
+      capacity_type               = string
     })
   })
 
@@ -110,6 +111,7 @@ variable "eks_cluster" {
       scaling_config_max_size     = 2
       scaling_config_min_size     = 2
       scaling_config_desired_size = 2
+      capacity_type               = "ON_DEMAND"
     }
   }
 }
