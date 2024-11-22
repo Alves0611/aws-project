@@ -13,6 +13,7 @@ variable "vpc" {
     cidr_block = string
 
     internet_gateway_name   = string
+    nat_gateway_name        = string
     public_route_table_name = string
 
     public_subnets = list(object({
@@ -28,6 +29,7 @@ variable "vpc" {
     cidr_block = "10.0.0.0/24"
 
     internet_gateway_name   = "studying-igw"
+    nat_gateway_name        = "studying-nat"
     public_route_table_name = "studying-public-route-table"
 
     public_subnets = [
@@ -42,14 +44,20 @@ variable "vpc" {
         map_public_ip_on_launch = true
         availability_zone       = "us-east-1b"
         cidr_block              = "10.0.0.64/26"
+      }
+    ]
+    private_subnets = [{
+      name                    = "private-us-east-1a"
+      map_public_ip_on_launch = false
+      availability_zone       = "us-east-1a"
+      cidr_block              = "10.0.0.128/26"
       },
       {
-        name                    = "public-us-east-1c"
-        map_public_ip_on_launch = true
-        availability_zone       = "us-east-1c"
-        cidr_block              = "10.0.0.128/26"
+        name                    = "private-us-east-1b"
+        map_public_ip_on_launch = false
+        availability_zone       = "us-east-1b"
+        cidr_block              = "10.0.0.192/26"
       }
-
     ]
   }
 }
