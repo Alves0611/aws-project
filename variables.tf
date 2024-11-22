@@ -16,6 +16,7 @@ variable "vpc" {
     nat_gateway_name         = string
     public_route_table_name  = string
     private_route_table_name = string
+    eip                      = string
 
     public_subnets = list(object({
       name                    = string
@@ -33,6 +34,7 @@ variable "vpc" {
     nat_gateway_name         = "studying-nat"
     public_route_table_name  = "studying-public-route-table"
     private_route_table_name = "studying-private-route-table"
+    eip                      = "studying-eip"
 
     public_subnets = [
       {
@@ -61,5 +63,27 @@ variable "vpc" {
         cidr_block              = "10.0.0.192/26"
       }
     ]
+  }
+}
+
+variable "eks_cluster" {
+  type = object({
+    name                              = string
+    role_name                         = string
+    enabled_cluster_log_types         = list(string)
+    access_config_authentication_mode = string
+  })
+
+  default = {
+    name     = "studying-eks-cluster"
+    role_arn = "StudyingEKSClusterRole"
+    enabled_cluster_log_types = [
+      "api",
+      "audit",
+      "authenticator",
+      "controllerManager",
+      "scheduler"
+    ]
+    authentication_mode = "API_AND_CONFIG_MAP"
   }
 }
