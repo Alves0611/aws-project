@@ -9,7 +9,7 @@ resource "aws_eks_cluster" "this" {
   }
 
   access_config {
-    authentication_mode = var.eks_cluster.acces_config_authentication_mode
+    authentication_mode = var.eks_cluster.access_config_authentication_mode
   }
 
   tags = var.tags
