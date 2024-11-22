@@ -72,11 +72,19 @@ variable "eks_cluster" {
     role_name                         = string
     enabled_cluster_log_types         = list(string)
     access_config_authentication_mode = string
+    node_group = object({
+      name                        = string
+      role_name                   = string
+      instance_types              = list(string)
+      scaling_config_max_size     = number
+      scaling_config_min_size     = number
+      scaling_config_desired_size = number
+    })
   })
 
   default = {
     name     = "studying-eks-cluster"
-    role_arn = "StudyingEKSClusterRole"
+    role_name = "StudyingEKSClusterRole"
     enabled_cluster_log_types = [
       "api",
       "audit",
@@ -84,6 +92,15 @@ variable "eks_cluster" {
       "controllerManager",
       "scheduler"
     ]
-    authentication_mode = "API_AND_CONFIG_MAP"
+    acces_config_authentication_mode = "API_AND_CONFIG_MAP"
+    node_group = {
+      name                        = "studying-eks-cluster-node-group"
+      role_name                   = "StudyingEKSClusterNodeGroup"
+      instance_types              = ["t3.medium"]
+      scaling_config_max_size     = 2
+      scaling_config_min_size     = 2
+      scaling_config_desired_size = 2
+
+    }
   }
 }
